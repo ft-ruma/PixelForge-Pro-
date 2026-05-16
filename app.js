@@ -541,10 +541,12 @@ function setZoom(level) {
 function fitToScreen() { 
   const canvas = document.getElementById('mainCanvas');
   const workspace = document.getElementById('workspace');
+  if (!canvas || !workspace) return;
   const wsRect = workspace.getBoundingClientRect();
-  const wRatio = (wsRect.width - 100) / canvas.width;
-  const hRatio = (wsRect.height - 100) / canvas.height;
-  const ratio = Math.min(wRatio, hRatio, 1);
+  const padding = window.innerWidth < 768 ? 20 : 80;
+  const wRatio = (wsRect.width - padding) / canvas.width;
+  const hRatio = (wsRect.height - padding) / canvas.height;
+  const ratio = Math.min(wRatio, hRatio); // Allow scaling down if needed
   setZoom(Math.round(ratio * 100)); 
 }
 
@@ -945,6 +947,9 @@ function handleImageFile(file) {
       addLayer();
       const latestLayer = document.querySelector('.layer-item .layer-name');
       if (latestLayer) latestLayer.textContent = file.name;
+      
+      // Auto adjust to fit screen
+      setTimeout(fitToScreen, 100);
     };
     img.src = e.target.result;
   };
