@@ -444,10 +444,20 @@ input[type=range]::-webkit-slider-thumb:hover { background: var(--accent2); box-
       "panel";
   }
   
-  .menubar { padding: 0 10px; }
+  .menubar { padding: 0 10px; justify-content: space-between; }
   .app-name { display: none; }
-  .zoom-control { display: none; }
-  .menu-nav { overflow-x: auto; white-space: nowrap; flex: 1; margin: 0 10px; }
+  
+  .zoom-control { 
+    display: flex; 
+    gap: 4px;
+    background: var(--bg2);
+    padding: 2px 4px;
+    scale: 0.9;
+  }
+  .zoom-control input { width: 35px; font-size: 0.75rem; }
+  .zoom-control .icon-btn { width: 26px; height: 26px; }
+
+  .menu-nav { overflow-x: auto; white-space: nowrap; flex: 1; margin: 0 5px; }
   .menu-nav::-webkit-scrollbar { display: none; }
   
   .toolbar {
@@ -466,8 +476,6 @@ input[type=range]::-webkit-slider-thumb:hover { background: var(--accent2); box-
     border-left: none; border-top: 1px solid var(--border);
     background: var(--bg1); position: relative; z-index: 100;
   }
-  
-  .canvas-container { transform: scale(0.8) !important; } /* Auto scale down on mobile */
 }
 
 /* Small Phone */
