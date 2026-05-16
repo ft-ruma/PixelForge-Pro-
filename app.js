@@ -91,7 +91,11 @@ function floodFill(ctx, x, y, fillColor) {
 
 function initApp() {
   console.log("PixelForge Pro initialized.");
-  setTool('brush');
+  setTool('crop');
+
+  window.addEventListener('resize', () => {
+    // Adjust layout state if needed
+  });
 
   const workspace = document.getElementById('workspace');
   workspace.addEventListener('dragover', (e) => { e.preventDefault(); workspace.classList.add('drag-over'); });
