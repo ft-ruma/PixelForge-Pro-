@@ -94,8 +94,16 @@ function initApp() {
   setTool('crop');
 
   window.addEventListener('resize', () => {
-    // Adjust layout state if needed
+    fitToScreen();
   });
+
+  workspace.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      if (e.deltaY < 0) zoomIn();
+      else zoomOut();
+    }
+  }, { passive: false });
 
   const workspace = document.getElementById('workspace');
   workspace.addEventListener('dragover', (e) => { e.preventDefault(); workspace.classList.add('drag-over'); });
