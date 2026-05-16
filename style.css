@@ -413,3 +413,75 @@ input[type=range]::-webkit-slider-thumb:hover { background: var(--accent2); box-
   border: 1.5px solid rgba(168,85,247,0.9); z-index: 300;
   transform: translate(-50%,-50%); transition: width 0.05s, height 0.05s;
 }
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet & Smaller Desktop */
+@media (max-width: 1200px) {
+  :root { --panel-w: 260px; }
+}
+
+@media (max-width: 1024px) {
+  :root { --panel-w: 240px; --toolbar-w: 48px; }
+  .app-name { font-size: 0.8rem; }
+  .menu-nav { gap: 0; }
+  .menu-item { padding: 0 6px; }
+}
+
+/* Large Phone / Small Tablet */
+@media (max-width: 768px) {
+  :root {
+    --panel-w: 0px;
+    --toolbar-w: 0px;
+  }
+  
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--menubar-h) 1fr auto;
+    grid-template-areas:
+      "menu"
+      "workspace"
+      "panel";
+  }
+  
+  .menubar { padding: 0 10px; }
+  .app-name { display: none; }
+  .zoom-control { display: none; }
+  .menu-nav { overflow-x: auto; white-space: nowrap; flex: 1; margin: 0 10px; }
+  .menu-nav::-webkit-scrollbar { display: none; }
+  
+  .toolbar {
+    position: absolute; bottom: 24px; left: 50%;
+    transform: translateX(-50%); width: auto; height: 50px;
+    flex-direction: row; border-radius: 25px; border: 1px solid var(--border2);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6); z-index: 1000;
+    padding: 0 10px; background: rgba(15,15,26,0.95);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .tool-group { flex-direction: row; }
+  .tool-sep { display: none; }
+  
+  .right-panel {
+    grid-area: panel; width: 100%; height: 35vh;
+    border-left: none; border-top: 1px solid var(--border);
+    background: var(--bg1); position: relative; z-index: 100;
+  }
+  
+  .canvas-container { transform: scale(0.8) !important; } /* Auto scale down on mobile */
+}
+
+/* Small Phone */
+@media (max-width: 480px) {
+  :root { --menubar-h: 44px; }
+  .menu-item { font-size: 0.75rem; padding: 0 5px; }
+  .btn-primary { padding: 5px 10px; font-size: 0.72rem; }
+  
+  .right-panel { height: 40vh; }
+  .panel-tab { font-size: 0.7rem; padding: 8px 2px; }
+  
+  .slider-row { grid-template-columns: 65px 1fr 24px; gap: 4px; }
+  .slider-row label { font-size: 0.7rem; }
+  
+  .adj-header { font-size: 0.65rem; padding: 8px; }
+  .adj-body { padding: 8px; gap: 8px; }
+}
