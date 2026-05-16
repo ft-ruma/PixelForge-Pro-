@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PixelForge Pro — Professional Image Editor for Mac</title>
+<meta name="description" content="PixelForge Pro is a premium, professional-grade image editing software for Mac users with layers, filters, adjustments and more."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-content">
+    <div class="splash-logo">
+      <svg width="80" height="80" viewBox="0 0 80 80"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#06b6d4"/></linearGradient></defs><polygon points="40,4 76,22 76,58 40,76 4,58 4,22" fill="url(#lg1)" opacity="0.15" stroke="url(#lg1)" stroke-width="2"/><text x="40" y="47" text-anchor="middle" fill="url(#lg1)" font-size="22" font-weight="700" font-family="Inter">PF</text></svg>
+    </div>
+    <h1 class="splash-title">PixelForge <span>Pro</span></h1>
+    <p class="splash-sub">Professional Image Editor for Mac</p>
+    <div class="splash-bar"><div class="splash-fill" id="splashFill"></div></div>
+    <p class="splash-status" id="splashStatus">Initializing engine…</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="hidden">
+
+  <!-- TOP MENU BAR -->
+  <header class="menubar">
+    <div class="menu-logo">
+      <svg width="22" height="22" viewBox="0 0 80 80"><defs><linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#a855f7"/><stop offset="100%" style="stop-color:#06b6d4"/></linearGradient></defs><polygon points="40,4 76,22 76,58 40,76 4,58 4,22" fill="url(#lg2)" opacity="0.3" stroke="url(#lg2)" stroke-width="3"/><text x="40" y="47" text-anchor="middle" fill="url(#lg2)" font-size="26" font-weight="700" font-family="Inter">PF</text></svg>
+      <span class="app-name">PixelForge <b>Pro</b></span>
+    </div>
+    <nav class="menu-nav">
+      <div class="menu-item" tabindex="0">File
+        <div class="dropdown">
+          <div class="dd-item" onclick="newDocument()">New… <span>⌘N</span></div>
+          <div class="dd-item" onclick="openFile()">Open… <span>⌘O</span></div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="saveFile()">Save <span>⌘S</span></div>
+          <div class="dd-item" onclick="exportFile()">Export As… <span>⇧⌘E</span></div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="closeDoc()">Close <span>⌘W</span></div>
+        </div>
+      </div>
+      <div class="menu-item" tabindex="0">Edit
+        <div class="dropdown">
+          <div class="dd-item" onclick="histUndo()">Undo <span>⌘Z</span></div>
+          <div class="dd-item" onclick="histRedo()">Redo <span>⇧⌘Z</span></div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="copyCanvas()">Copy <span>⌘C</span></div>
+          <div class="dd-item" onclick="pasteCanvas()">Paste <span>⌘V</span></div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="selectAll()">Select All <span>⌘A</span></div>
+          <div class="dd-item" onclick="deselect()">Deselect <span>⌘D</span></div>
+        </div>
+      </div>
+      <div class="menu-item" tabindex="0">Image
+        <div class="dropdown">
+          <div class="dd-item" onclick="showResizeDialog()">Image Size… <span>⌥⌘I</span></div>
+          <div class="dd-item" onclick="showCanvasSize()">Canvas Size…</div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="rotateImage(90)">Rotate 90° CW</div>
+          <div class="dd-item" onclick="rotateImage(-90)">Rotate 90° CCW</div>
+          <div class="dd-item" onclick="rotateImage(180)">Rotate 180°</div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="flipHorizontal()">Flip Horizontal</div>
+          <div class="dd-item" onclick="flipVertical()">Flip Vertical</div>
+        </div>
+      </div>
+      <div class="menu-item" tabindex="0">Filters
+        <div class="dropdown">
+          <div class="dd-item" onclick="applyFilter('blur')">Gaussian Blur</div>
+          <div class="dd-item" onclick="applyFilter('sharpen')">Sharpen</div>
+          <div class="dd-item" onclick="applyFilter('grayscale')">Grayscale</div>
+          <div class="dd-item" onclick="applyFilter('sepia')">Sepia</div>
+          <div class="dd-item" onclick="applyFilter('invert')">Invert</div>
+          <div class="dd-item" onclick="applyFilter('emboss')">Emboss</div>
+          <div class="dd-item" onclick="applyFilter('vintage')">Vintage</div>
+          <div class="dd-item" onclick="applyFilter('vignette')">Vignette</div>
+          <div class="dd-item" onclick="applyFilter('pixelate')">Pixelate</div>
+        </div>
+      </div>
+      <div class="menu-item" tabindex="0">View
+        <div class="dropdown">
+          <div class="dd-item" onclick="setZoom(100)">Actual Size <span>⌘1</span></div>
+          <div class="dd-item" onclick="fitToScreen()">Fit to Screen <span>⌘0</span></div>
+          <div class="dd-item" onclick="setZoom(200)">Zoom 200%</div>
+          <div class="dd-sep"></div>
+          <div class="dd-item" onclick="toggleGrid()">Toggle Grid <span>⌘'</span></div>
+          <div class="dd-item" onclick="toggleRulers()">Toggle Rulers</div>
+        </div>
+      </div>
+    </nav>
+    <div class="menu-right">
+      <div class="zoom-control">
+        <button onclick="zoomOut()" class="icon-btn" title="Zoom Out">−</button>
+        <span id="zoomLabel">100%</span>
+        <button onclick="zoomIn()" class="icon-btn" title="Zoom In">+</button>
+      </div>
+      <button class="btn-primary" onclick="exportFile()">Export</button>
+    </div>
+  </header>
+
+  <!-- TOOLBAR (left) -->
+  <aside class="toolbar" id="toolbar">
+    <div class="tool-group">
+      <button class="tool-btn active" id="tool-move" onclick="setTool('move')" title="Move (V)"><svg viewBox="0 0 24 24"><path d="M13 6v5h5V6l4 6-4 6v-5h-5v5l-4-6 4-6zM6 13H1l6-4v3h5v2H7v3L1 13z" fill="currentColor"/></svg></button>
+      <button class="tool-btn" id="tool-select" onclick="setTool('select')" title="Marquee Select (M)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="3 2"/></svg></button>
+      <button class="tool-btn" id="tool-lasso" onclick="setTool('lasso')" title="Lasso (L)"><svg viewBox="0 0 24 24"><path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M21 12c0 2-1 4-3 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="tool-sep"></div>
+    <div class="tool-group">
+      <button class="tool-btn" id="tool-crop" onclick="setTool('crop')" title="Crop (C)"><svg viewBox="0 0 24 24"><path d="M6 2v14h14M18 22V8H4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
+      <button class="tool-btn" id="tool-eyedropper" onclick="setTool('eyedropper')" title="Eyedropper (I)"><svg viewBox="0 0 24 24"><path d="M20.71 5.63l-2.34-2.34a1 1 0 00-1.41 0l-3.12 3.12-1.41-1.42-1.42 1.42 1.41 1.41-6.6 6.6A2 2 0 005 16v3h3a2 2 0 001.42-.59l6.6-6.6 1.41 1.42 1.42-1.42-1.42-1.41 3.12-3.12a1 1 0 000-1.65z" fill="currentColor"/></svg></button>
+    </div>
+    <div class="tool-sep"></div>
+    <div class="tool-group">
+      <button class="tool-btn" id="tool-brush" onclick="setTool('brush')" title="Brush (B)"><svg viewBox="0 0 24 24"><path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3z" fill="currentColor"/><path d="M20.71 4.63l-1.34-1.34a1 1 0 00-1.41 0L9 12.25 11.75 15l8.96-8.96a1 1 0 000-1.41z" fill="currentColor"/></svg></button>
+      <button class="tool-btn" id="tool-eraser" onclick="setTool('eraser')" title="Eraser (E)"><svg viewBox="0 0 24 24"><path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 01-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0zM4.22 15.58l3.54 3.53c.78.79 2.04.79 2.83 0l3.53-3.53-6.36-6.36-3.54 3.36z" fill="currentColor"/></svg></button>
+      <button class="tool-btn" id="tool-fill" onclick="setTool('fill')" title="Fill (G)"><svg viewBox="0 0 24 24"><path d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15a1.49 1.49 0 000 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10L10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z" fill="currentColor"/><path d="M0 20h24v4H0z" fill="currentColor" opacity="0.4"/></svg></button>
+    </div>
+    <div class="tool-sep"></div>
+    <div class="tool-group">
+      <button class="tool-btn" id="tool-text" onclick="setTool('text')" title="Text (T)"><svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z" fill="currentColor"/></svg></button>
+      <button class="tool-btn" id="tool-shape" onclick="setTool('shape')" title="Shape (U)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1" fill="currentColor" opacity="0.7"/><circle cx="17" cy="7" r="4" fill="currentColor" opacity="0.7"/><polygon points="3,21 11,13 11,21" fill="currentColor" opacity="0.7"/><rect x="13" y="13" width="8" height="8" rx="4" fill="currentColor" opacity="0.7"/></svg></button>
+      <button class="tool-btn" id="tool-pen" onclick="setTool('pen')" title="Pen (P)"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/></svg></button>
+    </div>
+    <div class="tool-sep"></div>
+    <!-- Color swatches -->
+    <div class="color-swatches">
+      <div class="swatch-bg" onclick="pickColor('bg')" style="background:#1a1a2e;" title="Background Color"></div>
+      <div class="swatch-fg" id="fgColor" onclick="pickColor('fg')" style="background:#a855f7;" title="Foreground Color"></div>
+    </div>
+    <input type="color" id="colorPicker" style="display:none" onchange="applyColorPick()"/>
+  </aside>
+
+  <!-- CANVAS AREA -->
+  <main class="workspace" id="workspace">
+    <div class="rulers-h" id="rulersH"></div>
+    <div class="rulers-v" id="rulersV"></div>
+    <div class="canvas-container" id="canvasContainer">
+      <div class="canvas-shadow">
+        <canvas id="mainCanvas" width="1200" height="800"></canvas>
+        <canvas id="overlayCanvas" width="1200" height="800" style="position:absolute;top:0;left:0;pointer-events:none;"></canvas>
+        <div class="grid-overlay hidden" id="gridOverlay"></div>
+      </div>
+    </div>
+    <!-- Drop zone hint -->
+    <div class="drop-hint" id="dropHint">
+      <div class="drop-box">
+        <svg width="64" height="64" viewBox="0 0 64 64"><path d="M32 8l24 16v16L32 56 8 40V24L32 8z" stroke="#a855f7" stroke-width="2" fill="none" opacity="0.5"/><path d="M32 24v16M24 32h16" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h2>Drop your image here</h2>
+        <p>or click <strong>File → Open</strong> to start editing</p>
+        <button class="btn-primary large" onclick="openFile()">Open Image</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="right-panel" id="rightPanel">
+    <!-- Tabs -->
+    <div class="panel-tabs">
+      <button class="panel-tab active" onclick="switchPanel('adjustments')" id="tab-adjustments">Adjustments</button>
+      <button class="panel-tab" onclick="switchPanel('layers')" id="tab-layers">Layers</button>
+      <button class="panel-tab" onclick="switchPanel('history')" id="tab-history">History</button>
+    </div>
+
+    <!-- Adjustments Panel -->
+    <div class="panel-content" id="panel-adjustments">
+      <div class="adj-section">
+        <div class="adj-header" onclick="toggleAdj('basics')">Basics <span id="arr-basics">▾</span></div>
+        <div class="adj-body" id="adj-basics">
+          <div class="slider-row"><label>Exposure</label><input type="range" min="-100" max="100" value="0" id="sl-exposure" oninput="liveAdjust()"/><span id="val-exposure">0</span></div>
+          <div class="slider-row"><label>Contrast</label><input type="range" min="-100" max="100" value="0" id="sl-contrast" oninput="liveAdjust()"/><span id="val-contrast">0</span></div>
+          <div class="slider-row"><label>Highlights</label><input type="range" min="-100" max="100" value="0" id="sl-highlights" oninput="liveAdjust()"/><span id="val-highlights">0</span></div>
+          <div class="slider-row"><label>Shadows</label><input type="range" min="-100" max="100" value="0" id="sl-shadows" oninput="liveAdjust()"/><span id="val-shadows">0</span></div>
+          <div class="slider-row"><label>Whites</label><input type="range" min="-100" max="100" value="0" id="sl-whites" oninput="liveAdjust()"/><span id="val-whites">0</span></div>
+          <div class="slider-row"><label>Blacks</label><input type="range" min="-100" max="100" value="0" id="sl-blacks" oninput="liveAdjust()"/><span id="val-blacks">0</span></div>
+        </div>
+      </div>
+      <div class="adj-section">
+        <div class="adj-header" onclick="toggleAdj('color')">Color <span id="arr-color">▾</span></div>
+        <div class="adj-body" id="adj-color">
+          <div class="slider-row"><label>Temperature</label><input type="range" min="-100" max="100" value="0" id="sl-temperature" oninput="liveAdjust()"/><span id="val-temperature">0</span></div>
+          <div class="slider-row"><label>Tint</label><input type="range" min="-100" max="100" value="0" id="sl-tint" oninput="liveAdjust()"/><span id="val-tint">0</span></div>
+          <div class="slider-row"><label>Vibrance</label><input type="range" min="-100" max="100" value="0" id="sl-vibrance" oninput="liveAdjust()"/><span id="val-vibrance">0</span></div>
+          <div class="slider-row"><label>Saturation</label><input type="range" min="-100" max="100" value="0" id="sl-saturation" oninput="liveAdjust()"/><span id="val-saturation">0</span></div>
+          <div class="slider-row"><label>Hue</label><input type="range" min="-180" max="180" value="0" id="sl-hue" oninput="liveAdjust()"/><span id="val-hue">0</span></div>
+        </div>
+      </div>
+      <div class="adj-section">
+        <div class="adj-header" onclick="toggleAdj('detail')">Detail <span id="arr-detail">▾</span></div>
+        <div class="adj-body" id="adj-detail">
+          <div class="slider-row"><label>Sharpness</label><input type="range" min="0" max="100" value="0" id="sl-sharpness" oninput="liveAdjust()"/><span id="val-sharpness">0</span></div>
+          <div class="slider-row"><label>Noise Reduce</label><input type="range" min="0" max="100" value="0" id="sl-noise" oninput="liveAdjust()"/><span id="val-noise">0</span></div>
+          <div class="slider-row"><label>Clarity</label><input type="range" min="-100" max="100" value="0" id="sl-clarity" oninput="liveAdjust()"/><span id="val-clarity">0</span></div>
+        </div>
+      </div>
+      <div class="adj-section">
+        <div class="adj-header" onclick="toggleAdj('effects')">Effects <span id="arr-effects">▾</span></div>
+        <div class="adj-body" id="adj-effects">
+          <div class="slider-row"><label>Vignette</label><input type="range" min="-100" max="100" value="0" id="sl-vignette" oninput="liveAdjust()"/><span id="val-vignette">0</span></div>
+          <div class="slider-row"><label>Grain</label><input type="range" min="0" max="100" value="0" id="sl-grain" oninput="liveAdjust()"/><span id="val-grain">0</span></div>
+          <div class="slider-row"><label>Blur</label><input type="range" min="0" max="20" value="0" id="sl-blur" oninput="liveAdjust()"/><span id="val-blur">0</span></div>
+        </div>
+      </div>
+      <div class="adj-actions">
+        <button class="btn-secondary" onclick="resetAdjustments()">Reset All</button>
+        <button class="btn-primary" onclick="applyAdjustments()">Apply</button>
+      </div>
+    </div>
+
+    <!-- Layers Panel -->
+    <div class="panel-content hidden" id="panel-layers">
+      <div class="layers-toolbar">
+        <button class="icon-btn" onclick="addLayer()" title="New Layer">+</button>
+        <button class="icon-btn" onclick="duplicateLayer()" title="Duplicate">⧉</button>
+        <button class="icon-btn" onclick="mergeDown()" title="Merge Down">↓</button>
+        <button class="icon-btn" onclick="deleteLayer()" title="Delete Layer">🗑</button>
+      </div>
+      <div class="layer-blend-row">
+        <select id="blendMode" onchange="changeBlendMode()">
+          <option value="normal">Normal</option>
+          <option value="multiply">Multiply</option>
+          <option value="screen">Screen</option>
+          <option value="overlay">Overlay</option>
+          <option value="darken">Darken</option>
+          <option value="lighten">Lighten</option>
+          <option value="color-dodge">Color Dodge</option>
+          <option value="color-burn">Color Burn</option>
+          <option value="hard-light">Hard Light</option>
+          <option value="soft-light">Soft Light</option>
+          <option value="difference">Difference</option>
+          <option value="exclusion">Exclusion</option>
+          <option value="hue">Hue</option>
+          <option value="saturation">Saturation</option>
+          <option value="color">Color</option>
+          <option value="luminosity">Luminosity</option>
+        </select>
+        <label>Opacity</label>
+        <input type="range" min="0" max="100" value="100" id="layerOpacity" oninput="updateLayerOpacity()"/>
+        <span id="opacityLabel">100</span>
+      </div>
+      <div class="layers-list" id="layersList"></div>
+    </div>
+
+    <!-- History Panel -->
+    <div class="panel-content hidden" id="panel-history">
+      <div class="history-list" id="historyList">
+        <div class="history-item active">Open Document</div>
+      </div>
+      <div class="history-actions">
+        <button class="btn-secondary" onclick="clearHistory()">Clear History</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- BOTTOM STATUS BAR -->
+  <footer class="statusbar">
+    <span id="statusTool">Tool: Move</span>
+    <span class="sep">|</span>
+    <span id="statusSize">—</span>
+    <span class="sep">|</span>
+    <span id="statusCursor">X: — Y: —</span>
+    <span class="sep">|</span>
+    <span id="statusColor">Color: —</span>
+    <div class="statusbar-right">
+      <span id="statusZoom">100%</span>
+    </div>
+  </footer>
+
+</div><!-- end #app -->
+
+<!-- DIALOGS -->
+<div class="modal-overlay hidden" id="newDocModal">
+  <div class="modal">
+    <div class="modal-header"><h3>New Document</h3><button class="modal-close" onclick="closeModal('newDocModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><label>Width (px)</label><input type="number" id="newW" value="1920"/></div>
+      <div class="form-row"><label>Height (px)</label><input type="number" id="newH" value="1080"/></div>
+      <div class="form-row"><label>Background</label>
+        <select id="newBg"><option value="white">White</option><option value="black">Black</option><option value="transparent">Transparent</option></select>
+      </div>
+      <div class="form-row"><label>Resolution</label><input type="number" id="newDPI" value="72"/> PPI</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('newDocModal')">Cancel</button>
+      <button class="btn-primary" onclick="createNewDoc()">Create</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="resizeModal">
+  <div class="modal">
+    <div class="modal-header"><h3>Image Size</h3><button class="modal-close" onclick="closeModal('resizeModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><label>Width (px)</label><input type="number" id="resW" value="1200"/></div>
+      <div class="form-row"><label>Height (px)</label><input type="number" id="resH" value="800"/></div>
+      <div class="form-row"><label>Constrain</label><input type="checkbox" id="resConstrain" checked/></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('resizeModal')">Cancel</button>
+      <button class="btn-primary" onclick="doResize()">Apply</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<input type="file" id="fileInput" accept="image/*" style="display:none" onchange="loadImage(this)"/>
+
+<script src="app.js"></script>
+</body>
+</html>
